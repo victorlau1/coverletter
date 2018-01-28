@@ -15,5 +15,7 @@ setup(name='coverletter',
       install_requires=[
             'python-docx',
             'cmd'
-      ]
+      ],
+      test_suite='nose.collector',
+      test_require=['nose'],
       zip_safe=False)
