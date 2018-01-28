@@ -1,32 +1,31 @@
 import cmd
 from docx import Document
-from . import separators
 
 
 class CoverLetterParser(cmd.Cmd):
   
   """
-    Initiates an Instance of Parser
+    Initiates an Instance of Document Parser with Template
   """
   
   intro = "Simple Cover Letter Parser" 
 
   def do_prompt(self, line):
     #Present a link to a word document
-    
-    self.directory = input('Please input the absolute path to the local document')
+    directory = input('Please input the absolute path to the local document: ')
     file_template = open(directory, 'rb')
-    self.document = Document(file_template)
-    parseDocument(document)
+    document = Document(file_template)
+    self.parse_document(document)
 
   #Once Open Parse the Document for Separators, defaults to [];
-  def parseDocument(self):
+  @classmethod
+  def parse_document(self, document):
     """
       Parse the document
     """
     #Go through the document
-    for paragraph in self.document.paragraphs:
-      print paragraph.text
+    for paragraph in document.paragraphs:
+      print(paragraph.text)
     
     
 
