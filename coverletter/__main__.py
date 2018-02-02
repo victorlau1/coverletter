@@ -1,23 +1,5 @@
-import cmd
-import coverletterparser
-from coverletterparser import *
-from docx import Document
-
-class CoverLetterCmdPrompt(cmd.Cmd):
-  
-  """
-    Initiates cmd loop 
-  """
-  intro = "Simple Cover Letter Parser" 
-
-  def do_prompt(self, line):
-    #Present a link to a word document
-    #directory = input('Please input the absolute path to the local document: ')
-    directory = '/mnt/c/Users/Victor/Downloads/Cover Letter Template.docx'
-    file_template = open(directory, 'rb')
-    document = Document(file_template)
-    separator = CoverLetterParser.select_separator()
-    CoverLetterParser.parse_document(document, separator)
+import cli
+from cli import Cli
 
 if __name__ == '__main__':
-  CoverLetterCmdPrompt().cmdloop()
+  Cli().cmdloop()
