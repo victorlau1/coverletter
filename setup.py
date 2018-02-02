@@ -13,9 +13,8 @@ setup(name='coverletter',
       license='MIT',
       packages=['coverletter'],
       install_requires=[
-            'python-docx',
-            'cmd'
+            'python-docx'
       ],
-      test_suite='nose.collector',
-      test_require=['nose'],
+      tests_suite='nose.collector',
+      tests_require=['nose'],
       zip_safe=False)
