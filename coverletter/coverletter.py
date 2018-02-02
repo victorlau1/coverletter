@@ -1,3 +1,5 @@
+import os
+
 class CoverLetterParser():
 
   separators = {
@@ -9,7 +11,7 @@ class CoverLetterParser():
   @classmethod
   def parse_document(self, document, separator):
     """
-      Parse the document
+      Parse the document iterating through all the body paragraph
     """
     for paragraph in document.paragraphs:
       place_counter = 0
@@ -19,9 +21,16 @@ class CoverLetterParser():
           variable_text = self.get_placeholder(paragraph.text, place_counter, separator[1])
           variable_text = separator[0] + variable_text + separator[1]
           new_text = self.insert_overwrite(paragraph.text, variable_text)
-          text = new_text
-          print(text)
+          paragraph.text = new_text
+          print(paragraph.text)
 
+    accepted = verify_document
+    if accepted:
+      save_document(document)
+    else:
+      parse_document(document, separator)
+    
+    
   @staticmethod
   def get_placeholder(text, temp_cnt, separator):
     """
@@ -36,19 +45,24 @@ class CoverLetterParser():
         temp_text += text[temp_cnt]
         temp_cnt += 1
 
-  #Reads Inputs for Specific Headers Supported are within the list  
   @staticmethod
   def insert_overwrite(old_text, prompt_text):
     """
-      Overwrite the separators with expected input;
+      Overwrite the separators with expected input
     """
     print('Variable Text is : ', prompt_text)
     new_text = input('What would you like the new text to be? ')
     new_text = old_text.replace(prompt_text, new_text, 1)
     return new_text
 
-  @staticmethod
-  def save_input_field(answer):
+  @classmethod
+  def verify_document(document):
+    print(document)
+    verify = input('Does this look like the output you would like (Y/N)? ')
+    return bool(verify)
+
+  @classmethod
+  def save_input_field(self, answer):
     """
       For same fields, save them to this session so we can reuse the same input
     """
@@ -59,13 +73,13 @@ class CoverLetterParser():
       self.database[inputfield] = answer
 
   @staticmethod
-  def write_document(document):
+  def save_document(document):
     """
       Save document based on user input save location
     """
     path = input('Where would you like to save the document?')
     new_name = input('What is the filename... example [FName-LName-Date]')
-    document.save(path + new_name)
+    document.save(os.join(path + new_name))
 
   @classmethod
   def select_separator(self):
@@ -91,10 +105,6 @@ class CoverLetterParser():
       except:
         print('Unknown error')
         self.select_separator()
-
-
-
-
 
 if __name__ == "__main__":
   CoverLetterParser()
