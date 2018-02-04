@@ -20,15 +20,16 @@ class CoverLetterParser():
         if text == separator[0]:
           variable_text = self.get_placeholder(paragraph.text, place_counter, separator[1])
           variable_text = separator[0] + variable_text + separator[1]
-          new_text = self.insert_overwrite(paragraph.text, variable_text)
-          paragraph.text = new_text
+          text_object = self.insert_overwrite(paragraph.text, variable_text)
+          place_counter = place_counter + text_object['counter'] - len(variable_text)
+          paragraph.text = text_object['new_text']
           print(paragraph.text)
 
-    accepted = verify_document
+    accepted = self.verify_document(document)
     if accepted:
-      save_document(document)
+      self.save_document(document)
     else:
-      parse_document(document, separator)
+      self.parse_document(document, separator)
     
     
   @staticmethod
@@ -51,13 +52,20 @@ class CoverLetterParser():
       Overwrite the separators with expected input
     """
     print('Variable Text is : ', prompt_text)
+    text_object = {
+      'counter': 0,
+      'new_text': 'string'
+    }
     new_text = input('What would you like the new text to be? ')
-    new_text = old_text.replace(prompt_text, new_text, 1)
-    return new_text
+    text_object['counter'] = len(new_text)
+    text_object['new_text'] = old_text.replace(prompt_text, new_text, 1)
+    return text_object
 
   @classmethod
-  def verify_document(document):
-    print(document)
+  def verify_document(self, document):
+    for paragraph in document.paragraphs:
+      print(paragraph.text)
+
     verify = input('Does this look like the output you would like (Y/N)? ')
     return bool(verify)
 
@@ -77,9 +85,9 @@ class CoverLetterParser():
     """
       Save document based on user input save location
     """
-    path = input('Where would you like to save the document?')
-    new_name = input('What is the filename... example [FName-LName-Date]')
-    document.save(os.join(path + new_name))
+    path = input('Where would you like to save the document? ')
+    new_name = input('What is the filename... example [FName-LName-Date] ')
+    document.save(os.path.join(path + new_name))
 
   @classmethod
   def select_separator(self):
@@ -106,5 +114,5 @@ class CoverLetterParser():
         print('Unknown error')
         self.select_separator()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   CoverLetterParser()
