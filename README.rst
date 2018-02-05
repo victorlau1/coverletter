@@ -2,7 +2,7 @@ Coverletter
 -----------
 
 To use, simply do:
-  python3 coverletter
+  python3 -m coverletter
 
 Commands:
   prompt: paste in absolute path to file (docx) you wish to parse
