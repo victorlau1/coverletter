@@ -40,9 +40,11 @@ class CoverLetterParser():
     full_text = False
     temp_text = ''
     while not full_text:
-      if text[temp_cnt] == separator:
+      if temp_cnt == len(text): 
+        return text
+      elif text[temp_cnt] == separator:
         return temp_text
-      else: 
+      else:
         temp_text += text[temp_cnt]
         temp_cnt += 1
 
