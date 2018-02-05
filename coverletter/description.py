@@ -25,7 +25,9 @@ class JobDescriptionParser:
       concatenate += ' ' + paragraph.text
 
     total_text = TextBlob(concatenate)
-    total_text.noun_phrases
+    test_dict = total_text.np_counts
+    sorted_dict = sorted(test_dict, key=test_dict.get, reverse=True)
+    print(sorted_dict)
 
 if __name__ == '__main__':
   JobDescriptionParser()
