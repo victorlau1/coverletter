@@ -14,19 +14,31 @@ class TestCoverLetter(TestCase):
 
   #Test insert overwrite
   def test_insert_overwrite(self):
-    assert True
+    
+    user_input = [
+      'demon'
+    ]
 
-  #Test placeholder returns right plaec
+    with patch('builtins.input', side_effect=user_input):
+      result = self.coverletter.insert_overwrite(self.fakeText, '[efficitur]' )
+      self.assertEqual(result['counter'], 5)
+      self.assertEqual(result['new_text'], 'Phasellus ipsum ipsum, demon vitae ligula non')
+
+  #Test placeholder returns right place with brackets
   def test_get_placeholder(self):
     result = self.coverletter.get_placeholder(self.fakeText, 24, ']')
     self.assertEqual(result, 'efficitur')
-  
+
+  #Test placeholder returns if no end is found
+  def test_get_placeholder_loop(self):
+    result = self.coverletter.get_placeholder(self.fakeText, 24, '}')
+    self.assertEqual(result, self.fakeText)
+
   #Tests Save Document Given Inputs
   def test_save_document(self):
     test_fileName = 'test_savedata.docx'
     file_path = os.path.dirname(__file__) + '/data/'
     testfile_savepath = os.path.abspath(os.path.join(file_path, test_fileName))
-    print(testfile_savepath)
     if os.path.exists(testfile_savepath):
       os.remove(testfile_savepath)
 
