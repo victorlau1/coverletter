@@ -1,9 +1,6 @@
 import cmd
 from coverletter.coverletter import CoverLetterParser
-<<<<<<< Updated upstream
-=======
 from coverletter.description import JobDescriptionParser
->>>>>>> Stashed changes
 from docx import Document
 
 class Cli(cmd.Cmd):
