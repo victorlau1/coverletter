@@ -23,7 +23,7 @@ class Cli(cmd.Cmd):
       separator = CoverLetterParser.select_separator()
       CoverLetterParser.parse_document(document, separator)
 
-  def do_analysis(self, arg):
+  def do_analysis(self, default='Main'):
     """
       Analysis to initiate the NLP modulue TextBlob
     """
