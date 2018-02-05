@@ -1,6 +1,6 @@
 import os
 
-class CoverLetterParser():
+class CoverLetterParser:
 
   separators = {
     1: '[]',
