@@ -1,5 +1,5 @@
 import cmd
-from coverletter import CoverLetterParser
+from .coverletter import CoverLetterParser
 from docx import Document
 
 class Cli(cmd.Cmd):
@@ -9,12 +9,11 @@ class Cli(cmd.Cmd):
   """
   intro = "Simple Cover Letter Parser" 
 
-  def do_prompt(self, line):
+  def do_prompt(self):
     """
       Prompts to initiate the prompt to create from a template
     """
-    #directory = input('Please input the absolute path to the local document: ')
-    directory = '/mnt/c/Users/Victor/Downloads/Cover Letter Template.docx'
+    directory = input('Please input the absolute path to the local document: ')
     file_template = open(directory, 'rb')
     document = Document(file_template)
     separator = CoverLetterParser.select_separator()
