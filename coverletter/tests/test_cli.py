@@ -11,6 +11,12 @@ class TestCli(TestCase):
       result = Cli().do_prompt()
       self.assertEqual(result, 'Y')
 
+  #Test Analysis Works
+  def test_analysis(self):
+    with patch('coverletter.cli.Cli.do_analysis', return_value='Y'):
+      result = Cli().do_analysis()
+      self.assertEqual(result, 'Y')
+
   #Integration Test 1
   def test_prompt(self):
     cli = Cli()

@@ -1,5 +1,9 @@
 import cmd
 from coverletter.coverletter import CoverLetterParser
+<<<<<<< Updated upstream
+=======
+from coverletter.description import JobDescriptionParser
+>>>>>>> Stashed changes
 from docx import Document
 
 class Cli(cmd.Cmd):
@@ -18,6 +22,13 @@ class Cli(cmd.Cmd):
       document = Document(file_template)
       separator = CoverLetterParser.select_separator()
       CoverLetterParser.parse_document(document, separator)
+
+  def do_analysis(self, arg):
+    """
+      Analysis to initiate the NLP modulue TextBlob
+    """
+    directory = input('Please input the absolute path to the local job document: ')
+    JobDescriptionParser(directory)
 
   def do_EOF(self):
     """
