@@ -8,7 +8,11 @@ class CoverLetterParser:
     3: '//'
   }
 
-  @classmethod
+  def __init__(self, document, words):
+    self.words = words
+    separator = self.select_separator()
+    self.parse_document(document, separator)
+
   def parse_document(self, document, separator):
     """
       Parse the document iterating through all the body paragraph
@@ -48,22 +52,24 @@ class CoverLetterParser:
         temp_text += text[temp_cnt]
         temp_cnt += 1
 
-  @staticmethod
-  def insert_overwrite(old_text, prompt_text):
+  def insert_overwrite(self, old_text, prompt_text):
     """
       Overwrite the separators with expected input
     """
-    print('Variable Text is : ', prompt_text)
+    print('Variable Text is: ', prompt_text)
     text_object = {
       'counter': 0,
       'new_text': 'string'
     }
+
+    if self.words:
+      print(self.words)
+
     new_text = input('What would you like the new text to be? ')
     text_object['counter'] = len(new_text)
     text_object['new_text'] = old_text.replace(prompt_text, new_text, 1)
     return text_object
 
-  @classmethod
   def verify_document(self, document):
     for paragraph in document.paragraphs:
       print(paragraph.text)
@@ -71,7 +77,6 @@ class CoverLetterParser:
     verify = input('Does this look like the output you would like (Y/N)? ')
     return bool(verify)
 
-  @classmethod
   def save_input_field(self, answer):
     """
       For same fields, save them to this session so we can reuse the same input
@@ -91,7 +96,7 @@ class CoverLetterParser:
     new_name = input('What is the filename... example [FName-LName-Date] ')
     document.save(os.path.join(path + new_name))
 
-  @classmethod
+
   def select_separator(self):
     """
       Allow user to specify selector that they will be utilizing
@@ -115,6 +120,8 @@ class CoverLetterParser:
       except:
         print('Unknown error')
         self.select_separator()
+
+
 
 if __name__ == '__main__':
   CoverLetterParser()
