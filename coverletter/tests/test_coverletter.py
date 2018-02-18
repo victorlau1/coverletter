@@ -7,10 +7,22 @@ import os
 class TestCoverLetter(TestCase):
 
   def setUp(self):
-    self.coverletter = CoverLetterParser()
+    file_path = os.path.dirname(__file__) + '/data/'
+    self.testfile_path = os.path.abspath(os.path.join(file_path, 'testDoc.docx'))
     self.fakeText = 'Phasellus ipsum ipsum, [efficitur] vitae ligula non'
-    document = Document()
-    self.fakeDocument = document
+    document = Document(self.testfile_path)
+    user_input = [
+      1,
+      'Whatever',
+      'Whatever',
+      'Y',
+      file_path,
+      'testDocSetup.docx'    
+    ]
+
+    with patch('builtins.input', side_effect=user_input):
+      self.coverletter = CoverLetterParser(document, None)
+      self.fakeDocument = document
 
   #Test insert overwrite
   def test_insert_overwrite(self):
