@@ -25,14 +25,16 @@ class TestDescriptionParser(TestCase):
     #Returns output of top words associated with job
     def test_top_nouns(self):
       description_parser = self.test_inst
-      test_document = self.document
       output = description_parser.top_nouns(description_parser, self.document)
       self.assertEqual('experience', output[0])
       self.assertEqual('sql', output[1])
 
     #Returns top nouns for inserted text (based on analysis)
-    def test_textblob_nouns(self):
-      assert True
+    def test_top_words(self):
+      description_parser = self.test_inst
+      output = description_parser.top_words(description_parser, self.document)
+      self.assertEqual('data', output[0])
+      self.assertEqual('and', output[1])
     
     #Writes output to a file (not DB)
     def test_save_file(self):
