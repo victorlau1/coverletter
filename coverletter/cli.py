@@ -10,22 +10,22 @@ class Cli(cmd.Cmd):
 
   intro = "Command Line Parser"
   
-  def do_prompt(self, line='Initial'):
+  def do_prompt(self, words=None):
     """
       Prompts to initiate coverletter template
     """
     directory = input('Please input the absolute path to the local document: ')
     with open(directory, 'rb') as file_template:
       document = Document(file_template)
-      separator = CoverLetterParser.select_separator()
-      CoverLetterParser.parse_document(document, separator)
+      CoverLetterParser(document, words)
 
   def do_analysis(self, default='Main'):
     """
-      Analysis to initiate the NLP modulue TextBlob
+      Analysis to initiate the NLP module TextBlob
     """
     directory = input('Please input the absolute path to the local job document: ')
-    JobDescriptionParser(directory)
+    top_words = JobDescriptionParser(directory).output
+    self.do_prompt(top_words)
 
   def do_EOF(self):
     """
