@@ -27,6 +27,7 @@ class Cli(cmd.Cmd):
     top_words = JobDescriptionParser(directory).output
     self.do_prompt(top_words)
 
+  @staticmethod
   def do_EOF(self):
     """
       Terminate by entering this or ctrl + D
